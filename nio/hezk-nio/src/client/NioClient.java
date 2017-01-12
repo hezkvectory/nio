@@ -11,9 +11,14 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Random;
 
-import com.talent.aio.common.utils.HelloPacket;
+import utils.HelloPacket;
 
-public class ClientTest {
+/**
+ * 客户端
+ * @author hezhengkui
+ *
+ */
+public class NioClient {
 
 	public static void main(String[] args) throws Exception {
 		client();
@@ -61,6 +66,9 @@ public class ClientTest {
 
 						if (key.isWritable()) {
 							key.attach(new Integer(1));
+							/**
+							 * 这里无限的发送随机字符串，测试是否在server端拆包粘包问题已经正确处理
+							 */
 							String say = "ByteBufferbyteb=ByteBuffer.allocate(say.length()+4);";
 							String tmp = "d"+say.substring(0, new Random().nextInt(say.length()));
 							int bodyLen = tmp.length();
@@ -85,31 +93,5 @@ public class ClientTest {
 			}
 		}
 	}
-
-//	static class ClientRunnable implements Runnable {
-//
-//		private SocketChannel ch;
-//
-//		private ClientRunnable(SocketChannel ch) {
-//			this.ch = ch;
-//		}
-//
-//		@Override
-//		public void run() {
-//			try {
-//				while (true) {
-//					ch.write(ByteBuffer.wrap((("client say:hi")).getBytes()));
-//					Thread.sleep(5000);
-//				}
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				try {
-//					ch.close();
-//				} catch (IOException e1) {
-//					e1.printStackTrace();
-//				}
-//			}
-//		}
-//	}
 
 }

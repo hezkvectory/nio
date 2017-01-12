@@ -11,9 +11,18 @@ import java.nio.channels.SocketChannel;
 import java.util.Iterator;
 import java.util.Set;
 
-import com.talent.aio.common.utils.ByteBufferUtils;
-import com.talent.aio.common.utils.HelloPacket;
-
+import utils.ByteBufferUtils;
+import utils.HelloPacket;
+/**
+ * NIO server端
+ * 
+ * server端解决了socket粘包拆包问题<br/>
+ * 目前值显示一个server端和一个client端的拆包粘包，后期完善，实现server端对应N个client拆包粘包问题<br/>
+ * 主要修改的是<code>private ByteBuffer lastByteBuffer = null;</code>这里需要改成SocketChannel对应lastByteBuffer</br>
+ * lastByteBuffer主要是记录拆包粘包时没有处理完的信息
+ * @author hezhengkui
+ *
+ */
 public class NioServer {
 
 	public static final int PORT = 8200;
@@ -105,6 +114,13 @@ public class NioServer {
 		}
 	}
 
+	/**
+	 * 报文解密，目前简单的实现了从报文中抽取内容，并没有给予封装，后期实现
+	 * @param buffer
+	 * @param client
+	 * @return
+	 * @throws IOException
+	 */
 	private String decode(ByteBuffer buffer, SocketChannel client)
 			throws IOException {
 		int readableLength = buffer.limit() - buffer.position();
