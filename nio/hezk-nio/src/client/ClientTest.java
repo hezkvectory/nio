@@ -60,20 +60,17 @@ public class ClientTest {
 						}
 
 						if (key.isWritable()) {
-//							synchronized (ClientTest.class) {
-								key.attach(new Integer(1));
-								String say = "ByteBufferbyteb=ByteBuffer.allocate(say.length()+4);";
-								String tmp = "d"+say.substring(0, new Random().nextInt(say.length()));
-								int bodyLen = tmp.length();
-								int allLen = HelloPacket.HEADER_LENGHT + bodyLen;
-								ByteBuffer byteb = ByteBuffer.allocate(allLen);
-								byteb.order(ByteOrder.BIG_ENDIAN);
-								byteb.putInt(bodyLen);
-								byteb.put(tmp.getBytes());
-								byteb.flip();
-								ch.write(byteb);
-//							}
-//							ch.close();
+							key.attach(new Integer(1));
+							String say = "ByteBufferbyteb=ByteBuffer.allocate(say.length()+4);";
+							String tmp = "d"+say.substring(0, new Random().nextInt(say.length()));
+							int bodyLen = tmp.length();
+							int allLen = HelloPacket.HEADER_LENGHT + bodyLen;
+							ByteBuffer byteb = ByteBuffer.allocate(allLen);
+							byteb.order(ByteOrder.BIG_ENDIAN);
+							byteb.putInt(bodyLen);
+							byteb.put(tmp.getBytes());
+							byteb.flip();
+							ch.write(byteb);
 						}
 					}
 				}
